@@ -1,69 +1,119 @@
 import Image from "next/image";
+import Link from "next/link";
+import Icon from "@/components/Icon";
+import { Container, ProductGrid, WhyChooseUs } from "@/components/Sections";
+import { pageMetadata } from "@/lib/seo";
+import content from "@/data/pageContent.json";
+
+const meta = content.meta.home;
+
+export const metadata = pageMetadata({
+  title: meta.title,
+  description: meta.description,
+  keywords: meta.keywords,
+  path: "/",
+  image: "/home/banner-image.png",
+});
+
+const EXCELLENCE = ["Eco-Friendly Approach", "Cost-Effective Solutions", "Trusted Partner", "Timely Delivery"];
+
+const VISION_MISSION = [
+  {
+    title: "Our Vision",
+    icon: "eye",
+    card: "bg-navy",
+    circle: "bg-p2",
+    text: "To be a globally recognized leader in innovative and sustainable packaging solutions, creating value for our clients while preserving the environment for future generations.",
+  },
+  {
+    title: "Our Mission",
+    icon: "crosshairs",
+    card: "bg-p2",
+    circle: "bg-navy",
+    text: "At HB Packaging and Trading, our mission is to deliver superior quality, customizable, and eco-friendly packaging solutions that exceed client expectations.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.js
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <>
+      {/* Hero */}
+      <section className="bg-cream pb-[25px] pt-[65px] lg:pt-[75px]">
+        <Container className="grid items-center gap-8 md:grid-cols-2">
+          <div className="anim-fade-up py-8">
+            <h1>
+              <span className="block text-[40px] font-black leading-tight text-p1 md:text-[55px]">Make The Best</span>
+              <span className="-mt-2 block text-[42px] font-black leading-tight text-p2 md:-mt-5 md:text-[70px]">
+                Packaging
+              </span>
+            </h1>
+            <p className="my-6 text-p3">
+              We are a leading blister packaging manufacturer and blister packaging supplier, offering expensive,
+              long-lasting, and able to change packaging options. Our products serve a range of sectors and guarantee
+              creative and affordable packaging to keep and present your goods
+            </p>
+            <Link href="/about-us/" className="btn">
+              <Icon name="arrowCircleRight" />
+              Learn More
+            </Link>
+          </div>
+          <div className="anim-fade relative mx-auto aspect-[2000/1833] w-full max-w-[560px]">
             <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+              src="/home/banner-image.png"
+              alt="Blister Packaging Manufacturer"
+              fill
+              priority
+              sizes="(max-width: 767px) 100vw, 560px"
+              className="object-contain"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+        </Container>
+      </section>
+
+      {/* Vision / Mission / Excellence */}
+      <section className="bg-[linear-gradient(var(--cream)_50%,#fff_50%)]">
+        <div className="grid items-center gap-10 rounded-[50px] bg-p1 px-5 pb-12 pt-[70px] sm:px-10 lg:grid-cols-[57%_1fr] lg:gap-[45px] lg:pb-[100px] lg:pl-[93px] lg:pr-10 lg:pt-[110px]">
+          <div className="grid gap-[80px] sm:grid-cols-2 sm:gap-[37px]">
+            {VISION_MISSION.map((c) => (
+              <div
+                key={c.title}
+                className={`anim-fade-up relative flex flex-col items-center justify-center rounded-[50px] px-5 pb-6 pt-[70px] text-center text-white ${c.card}`}
+              >
+                <span
+                  className={`absolute -top-[50px] left-1/2 grid h-[100px] w-[100px] -translate-x-1/2 place-items-center rounded-full text-white ${c.circle}`}
+                >
+                  <Icon name={c.icon} size="50" />
+                </span>
+                <h4 className="text-lg font-bold text-white lg:text-[25px]">{c.title}</h4>
+                <p className="mt-2 leading-[1.65] lg:text-base">{c.text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="anim-fade-up">
+            <h2 className="text-[30px] font-black leading-[0.9] text-white md:text-[40px]">
+              Excellence In Blister Packaging
+            </h2>
+            <ul className="mt-7 space-y-[10px]">
+              {EXCELLENCE.map((t) => (
+                <li key={t} className="flex items-center gap-3 text-white">
+                  <Icon name="checkCircle" size="24" />
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <WhyChooseUs text="As a leading blister packaging manufacturer and blister packaging supplier, We provide creative, long-term, and environmentally responsible packaging options." />
+
+      {/* Popular Product */}
+      <section className="py-[50px] bg-cream">
+        <Container>
+          <h2 className="mb-8 text-center text-[32px] font-extrabold text-p1 md:text-[40px]">Popular Product</h2>
+          <ProductGrid />
+        </Container>
+      </section>
+    </>
   );
 }
