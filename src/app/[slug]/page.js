@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import { Container, Html, JsonLd, PageHeader, ProductBlock } from "@/components/Sections";
 import BlogPost from "@/components/BlogPost";
 import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { extractFaqs } from "@/lib/faq";
+import { faqSchema, productSchema } from "@/lib/schema";
 import productPages from "@/data/productPages.json";
 import posts from "@/data/blogPosts.json";
 
@@ -57,36 +58,17 @@ function CategoryPage({ slug, page }) {
   const products = page.sections.filter((s) => s.type === "product");
   let productIndex = 0;
 
-  const productSchema = products.map((p) => {
-    const price = (p.price || "").match(/[\d.]+/);
-    return {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      name: p.name,
-      image: `${SITE_URL}${p.image}`,
-      brand: { "@type": "Brand", name: SITE_NAME },
-      ...(p.rating && {
-        aggregateRating: { "@type": "AggregateRating", ratingValue: p.rating, bestRating: 5, ratingCount: 1 },
-      }),
-      ...(price && {
-        offers: {
-          "@type": "Offer",
-          priceCurrency: "INR",
-          price: price[0],
-          availability: "https://schema.org/InStock",
-          url: `${SITE_URL}${path}`,
-        },
-      }),
-    };
-  });
+  const productsLd = products.map((p) => productSchema(p, { pagePath: path, pageTitle: page.heading }));
+  const faqLd = faqSchema(extractFaqs(...page.sections.map((s) => s.html)));
 
   return (
     <>
       <JsonLd data={breadcrumbSchema(page.heading, path)} />
-      {productSchema.map((s, i) => (
+      {productsLd.map((s, i) => (
         <JsonLd key={i} data={s} />
       ))}
-      <PageHeader title={page.heading} as={page.headingTag === "h1" ? "h1" : "h2"} />
+      {faqLd && <JsonLd data={faqLd} />}
+      <PageHeader title={page.heading} />
 
       {page.sections.map((s, i) =>
         s.type === "product" ? (

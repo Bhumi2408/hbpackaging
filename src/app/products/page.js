@@ -1,6 +1,9 @@
 import { Container, Html, JsonLd, PageHeader, ProductGrid } from "@/components/Sections";
 import { breadcrumbSchema, pageMetadata } from "@/lib/seo";
 import content from "@/data/pageContent.json";
+import { extractFaqs } from "@/lib/faq";
+import { faqSchema, productCategoryListSchema } from "@/lib/schema";
+import { PRODUCT_GRID } from "@/lib/site";
 
 const meta = content.meta.products;
 
@@ -12,10 +15,14 @@ export const metadata = pageMetadata({
   image: "/products/biscuit-packaging.jpg",
 });
 
+const faqLd = faqSchema(extractFaqs(content.productsSeo));
+
 export default function ProductsPage() {
   return (
     <>
       <JsonLd data={breadcrumbSchema("Products", "/products/")} />
+      <JsonLd data={productCategoryListSchema(PRODUCT_GRID)} />
+      {faqLd && <JsonLd data={faqLd} />}
       <PageHeader title="Products" />
 
       <section className="py-[50px] px-5 lg:px-14">

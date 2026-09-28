@@ -4,7 +4,9 @@ import Icon from "./Icon";
 import { Container, Html, JsonLd } from "./Sections";
 import { getPosts, preparePost, readingTime } from "@/lib/blog";
 import { formatDate } from "@/lib/seo";
-import { CONTACT, PRODUCT_MENU, SITE_NAME, SITE_URL, WHATSAPP_URL } from "@/lib/site";
+import { extractFaqs } from "@/lib/faq";
+import { faqSchema, ORG_ID } from "@/lib/schema";
+import { CONTACT, PRODUCT_MENU, SITE_URL, WHATSAPP_URL } from "@/lib/site";
 
 function SidebarCard({ title, children, className = "" }) {
   return (
@@ -23,6 +25,7 @@ export default function BlogPost({ post }) {
   const path = `/${post.slug}/`;
   const { html, toc } = preparePost(post);
   const minutes = readingTime(post.html);
+  const faqLd = faqSchema(extractFaqs(post.html));
   const others = getPosts().filter((p) => p.slug !== post.slug).slice(0, 3);
 
   return (
@@ -38,6 +41,7 @@ export default function BlogPost({ post }) {
           ],
         }}
       />
+      {faqLd && <JsonLd data={faqLd} />}
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -48,11 +52,7 @@ export default function BlogPost({ post }) {
           datePublished: post.date,
           wordCount: post.html.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length,
           author: { "@type": "Person", name: post.author },
-          publisher: {
-            "@type": "Organization",
-            name: SITE_NAME,
-            logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
-          },
+          publisher: { "@id": ORG_ID },
           mainEntityOfPage: `${SITE_URL}${path}`,
         }}
       />

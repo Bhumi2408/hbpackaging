@@ -111,7 +111,7 @@ export default function BlogPage() {
   return (
     <>
       <JsonLd data={breadcrumbSchema("Blog", "/blog/")} />
-      <PageHeader title="Blog" as="h1" />
+      <PageHeader title="Blog" />
 
       <section className="bg-[linear-gradient(var(--cream)_0,var(--cream)_120px,#fff_120px)] pb-[70px] pt-6">
         <Container className="max-w-[1260px]">

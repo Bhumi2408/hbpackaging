@@ -14,7 +14,7 @@ export function Html({ html, className = "" }) {
 }
 
 /* Inner-page title band with breadcrumb (min-height 400px desktop / 300px mobile) */
-export function PageHeader({ title, as: Tag = "h2" }) {
+export function PageHeader({ title, as: Tag = "h1" }) {
   return (
     <section className="flex min-h-[340px] items-center bg-cream pt-10 md:min-h-[400px] lg:pt-[50px]">
       <Container className="anim-fade-up text-center">

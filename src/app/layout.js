@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import FloatingChat from "@/components/FloatingChat";
 import { JsonLd } from "@/components/Sections";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
-import siteSchema from "@/data/schema.json";
+import { organizationSchema, websiteSchema } from "@/lib/schema";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -33,9 +33,8 @@ export default function RootLayout({ children }) {
         </main>
         <Footer />
         <FloatingChat />
-        {siteSchema.map((s, i) => (
-          <JsonLd key={i} data={s} />
-        ))}
+        <JsonLd data={organizationSchema()} />
+        <JsonLd data={websiteSchema()} />
       </body>
     </html>
   );

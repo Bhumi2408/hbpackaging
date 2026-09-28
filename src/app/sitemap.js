@@ -12,13 +12,13 @@ export default function sitemap() {
     { path: "/blog/", priority: 0.6 },
   ];
   return [
-    ...staticPages.map((p) => ({ url: `${SITE_URL}${p.path}`, lastModified: now, changeFrequency: "weekly", priority: p.priority })),
+    ...staticPages.map((p) => ({ url: `${SITE_URL}${p.path}`, lastModified: now, changeFrequency: "daily", priority: p.priority })),
     ...Object.keys(productPages).map((slug) => ({
       url: `${SITE_URL}/${slug}/`,
       lastModified: now,
-      changeFrequency: "weekly",
+      changeFrequency: "daily",
       priority: 0.8,
     })),
-    ...posts.map((p) => ({ url: `${SITE_URL}/${p.slug}/`, lastModified: new Date(p.date), changeFrequency: "monthly", priority: 0.6 })),
+    ...posts.map((p) => ({ url: `${SITE_URL}/${p.slug}/`, lastModified: new Date(p.date), changeFrequency: "daily", priority: 0.6 })),
   ];
 }

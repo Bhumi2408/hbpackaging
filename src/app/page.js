@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "@/components/Icon";
-import { Container, ProductGrid, WhyChooseUs } from "@/components/Sections";
+import { Container, JsonLd, ProductGrid, WhyChooseUs } from "@/components/Sections";
 import { pageMetadata } from "@/lib/seo";
 import content from "@/data/pageContent.json";
+import { ORG_ID } from "@/lib/schema";
 
 const meta = content.meta.home;
 
@@ -34,9 +35,21 @@ const VISION_MISSION = [
   },
 ];
 
+const SERVICE_LD = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Blister Packaging Manufacturing",
+  name: "Blister Packaging Manufacturing",
+  provider: { "@id": ORG_ID },
+  areaServed: { "@type": "Country", name: "India" },
+  description:
+    "Custom blister trays and blister packaging for biscuits, cakes, cookies, sweets, chips, rusk, muffins, toys and cosmetics, manufactured in Delhi with pan-India delivery.",
+};
+
 export default function Home() {
   return (
     <>
+      <JsonLd data={SERVICE_LD} />
       {/* Hero */}
       <section className="bg-cream pb-[25px] pt-[65px] lg:pt-[75px]">
         <Container className="grid items-center gap-8 md:grid-cols-2">

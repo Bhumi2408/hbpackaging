@@ -1,5 +1,5 @@
 /*
- * Turns the FAQ part of rich-text content into an accordion.
+ * Turns the FAQ part of rich-text content into an accordion, and extracts the same Q&As for FAQ schema.
  *
  * The content writes FAQs in several ways:
  *   <p><strong>Q: …?</strong><br>A: …</p>                    (one Q&A per paragraph)
@@ -31,36 +31,56 @@ function cleanAnswer(html) {
   return parts.map((s) => `<p>${s}</p>`).join("");
 }
 
-function toAccordion(region) {
+// Finds the FAQ section (from the FAQ heading to the next section heading) and splits it into Q&A items
+function parseFaq(html) {
+  const heading = html.match(FAQ_HEADING);
+  if (!heading) return null;
+
+  const start = heading.index + heading[0].length;
+  const next = html.slice(start).search(/<h[2-4][\s>]/);
+  const end = next === -1 ? html.length : start + next;
+  const region = html.slice(start, end);
+
   const matches = [...region.matchAll(QUESTION)];
   if (matches.length < 2) return null;
 
+  const items = matches.map((m, i) => {
+    const aStart = m.index + m[0].length;
+    const aEnd = i + 1 < matches.length ? matches[i + 1].index : region.length;
+    return { q: cleanQuestion(m[1]), a: cleanAnswer(region.slice(aStart, aEnd)) };
+  });
   // Anything before the first question (e.g. an intro line) stays as normal content
   const before = region.slice(0, matches[0].index).replace(/<p>\s*$/, "");
-  const items = matches.map((m, i) => {
-    const start = m.index + m[0].length;
-    const end = i + 1 < matches.length ? matches[i + 1].index : region.length;
-    return { q: cleanQuestion(m[1]), a: cleanAnswer(region.slice(start, end)) };
-  });
+  return { start, end, before, items };
+}
 
-  const list = items
+export function withFaqAccordion(html) {
+  const faq = parseFaq(html);
+  if (!faq) return html;
+
+  const list = faq.items
     .map(
       (it, i) =>
         `<details class="faq-item"${i === 0 ? " open" : ""}><summary><span>${it.q}</span></summary><div class="faq-answer">${it.a}</div></details>`
     )
     .join("");
-  return `${before}<div class="faq-list">${list}</div>`;
+  return html.slice(0, faq.start) + `${faq.before}<div class="faq-list">${list}</div>` + html.slice(faq.end);
 }
 
-export function withFaqAccordion(html) {
-  const heading = html.match(FAQ_HEADING);
-  if (!heading) return html;
+function toPlainText(html) {
+  return html
+    .replace(/<\/p>\s*<p>/g, " ")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&amp;/g, "&")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
-  const regionStart = heading.index + heading[0].length;
-  const next = html.slice(regionStart).search(/<h[2-4][\s>]/);
-  const regionEnd = next === -1 ? html.length : regionStart + next;
-
-  const accordion = toAccordion(html.slice(regionStart, regionEnd));
-  if (!accordion) return html;
-  return html.slice(0, regionStart) + accordion + html.slice(regionEnd);
+// Plain-text Q&A pairs for FAQPage structured data (the same questions the accordion shows)
+export function extractFaqs(...htmlParts) {
+  return htmlParts.flatMap((html) => {
+    const faq = html && parseFaq(html);
+    return faq ? faq.items.map((it) => ({ question: toPlainText(it.q), answer: toPlainText(it.a) })) : [];
+  });
 }
