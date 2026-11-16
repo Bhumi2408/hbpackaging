@@ -114,7 +114,7 @@ export default function BlogPage() {
       <PageHeader title="Blog" />
 
       <section className="bg-[linear-gradient(var(--cream)_0,var(--cream)_120px,#fff_120px)] pb-[70px] pt-6">
-        <Container className="max-w-[1260px]">
+        <Container>
           {featured && <FeaturedPost post={featured} />}
 
           {rest.length > 0 && (

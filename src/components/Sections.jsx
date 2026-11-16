@@ -5,7 +5,7 @@ import { withFaqAccordion } from "@/lib/faq";
 import { PRODUCT_GRID } from "@/lib/site";
 
 export function Container({ className = "", children }) {
-  return <div className={`mx-auto w-full max-w-[1140px] px-4 ${className}`}>{children}</div>;
+  return <div className={`mx-auto w-full page-x ${className}`}>{children}</div>;
 }
 
 // Rich text content; any FAQ section inside it is rendered as an accordion

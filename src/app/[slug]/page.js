@@ -95,7 +95,7 @@ function ContentSection({ html }) {
   }
   return (
     <section className="bg-cream py-[60px]">
-      <Container className="max-w-[1100px]">
+      <Container>
         <div className="anim-fade-up rounded-[40px] bg-white px-6 py-10 shadow-[0_10px_40px_rgba(40,75,99,0.08)] md:px-14 md:py-14">
           <Html html={html} />
         </div>

@@ -249,7 +249,7 @@ export default function Home() {
 
       {/* FAQs (accordion + FAQPage schema both come from content.homeFaq) */}
       <section className="bg-cream py-[60px] lg:py-[80px]">
-        <Container className="max-w-[900px]">
+        <Container>
           <Html
             html={content.homeFaq}
             className="anim-fade-up [&>h2]:mb-8 [&>h2]:text-center [&>h2]:after:mx-auto"

@@ -99,7 +99,7 @@ export default function BlogPost({ post }) {
       </section>
 
       {/* Featured image overlapping the hero */}
-      <Container className="max-w-[1260px]">
+      <Container>
         <div className="anim-fade relative -mt-[110px] aspect-[16/8] overflow-hidden rounded-[40px] bg-[#eef4f2] shadow-[0_20px_50px_rgba(40,75,99,0.18)] lg:-mt-[150px]">
           <Image
             src={post.image}

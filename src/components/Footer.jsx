@@ -23,8 +23,8 @@ function LinkList({ title, links }) {
 export default function Footer() {
   return (
     <footer className="bg-p6">
-      <div className="rounded-t-[50px] bg-navy px-4 py-[50px]">
-        <div className="mx-auto grid max-w-[1140px] gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.4fr]">
+      <div className="rounded-t-[50px] bg-navy py-[50px]">
+        <div className="grid page-x gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.4fr]">
           <div>
             <h2 className="mb-4 text-[28px] font-bold text-white">HB Packaging</h2>
             <p className="text-white">
@@ -63,7 +63,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-[1140px] py-[26px]">
+        <div className="page-x py-[26px]">
           <div className="divider-tribal" />
         </div>
 

@@ -71,8 +71,8 @@ export default function Header() {
       </div>
 
       {/* Main navigation pill (rounded 50px), half over the band and half over the section below */}
-      <div className="relative px-4">
-        <div className="mx-auto flex h-20 max-w-[1100px] items-center justify-between rounded-[50px] bg-white px-6 lg:h-[80px] lg:px-[54px]">
+      <div className="relative page-x">
+        <div className="flex h-20 items-center justify-between rounded-[50px] bg-white px-6 lg:h-[80px] lg:px-[54px]">
           <Link href="/" aria-label="HB Packaging home" className="shrink-0">
             <Image
               src="/logo.png"

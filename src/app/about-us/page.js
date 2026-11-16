@@ -47,7 +47,7 @@ export default function AboutPage() {
 
       {/* Other Services + qualities (left) | image + key highlights (right) */}
       <section className="bg-cream py-[30px] lg:py-[60px]">
-        <div className="mx-auto grid items-start gap-7 px-4 lg:grid-cols-[547fr_1079fr] lg:gap-[60px] lg:px-[80px]">
+        <div className="grid items-start gap-7 page-x lg:grid-cols-[547fr_1079fr] lg:gap-[60px]">
           <div className="space-y-9">
             <div className="anim-fade-up rounded-[50px] bg-p2 px-6 py-10 text-center lg:px-6 lg:pb-6 lg:pt-6">
               <h4 className="text-[18px] font-bold text-white lg:text-[20px]">Other Services</h4>

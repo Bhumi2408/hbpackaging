@@ -326,3 +326,14 @@ h1, h2, h3, h4, h5, h6 {
   .anim-fade-up, .anim-fade { animation: none; }
   html { scroll-behavior: auto; }
 }
+
+/* Side padding for every section: 200px on large screens (≈1920px wide), scaling down on smaller ones */
+@layer components {
+  .page-x { padding-inline: 16px; }
+  @media (min-width: 768px) {
+    .page-x { padding-inline: 40px; }
+  }
+  @media (min-width: 1024px) {
+    .page-x { padding-inline: clamp(40px, 10.42vw, 200px); }
+  }
+}
