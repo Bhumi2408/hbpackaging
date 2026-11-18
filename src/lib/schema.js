@@ -106,7 +106,9 @@ export function productSchema(product, { pagePath, pageTitle, category }) {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    image: abs(product.image),
+    image: product.gallery?.length
+      ? [product.image, ...product.gallery.map((g) => g.src)].map(abs)
+      : abs(product.image),
     description,
     category: category || pageTitle,
     brand: { "@type": "Brand", name: SITE_NAME },

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "./Icon";
+import ProductSlider from "./ProductSlider";
 import { withFaqAccordion } from "@/lib/faq";
 import { PRODUCT_GRID } from "@/lib/site";
 
@@ -186,14 +187,21 @@ export function ProductBlock({ product, index, pageTitle }) {
       <Container className="py-10 md:py-[50px]">
         <div className={`grid items-center gap-8 md:grid-cols-2 md:gap-12 ${reverse ? "md:[&>*:first-child]:order-2" : ""}`}>
           <div className="anim-fade relative h-[220px] overflow-hidden rounded-[20px] shadow-[0_0_10px_0_rgba(0,0,0,0.5)] md:h-[450px]">
-            <Image
-              src={product.image}
-              alt={product.alt || product.name || pageTitle}
-              fill
-              sizes="(max-width: 767px) 100vw, 550px"
-              className="object-cover"
-              priority={index === 0}
-            />
+            {product.gallery?.length ? (
+              <ProductSlider
+                slides={[{ src: product.image, alt: product.alt || product.name || pageTitle }, ...product.gallery]}
+                priority={index === 0}
+              />
+            ) : (
+              <Image
+                src={product.image}
+                alt={product.alt || product.name || pageTitle}
+                fill
+                sizes="(max-width: 767px) 100vw, 550px"
+                className="object-cover"
+                priority={index === 0}
+              />
+            )}
           </div>
           <div className="anim-fade-up">
             {product.rating && <Stars value={product.rating} />}
