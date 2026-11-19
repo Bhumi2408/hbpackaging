@@ -14,11 +14,11 @@ export const metadata = {
   },
   description:
     "HB Packaging is a trusted Blister Packaging Manufacturer and Supplier in India, offering durable, affordable, and customized packaging solutions. Contact us today!",
-    keywords: [
+  keywords: [
     "HB Packaging",
     "Blister Packaging Manufacturer",
     "Blister Packaging Supplier",
-   ],
+  ],
   icons: {
     icon: "/logo.png"
   },
